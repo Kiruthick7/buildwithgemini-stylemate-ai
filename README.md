@@ -2,197 +2,153 @@
 
 <img src="assets/build-with-gemini-banner.png" alt="Build with Gemini" width="100%" />
 
-# 🚀 Build with Gemini · Track 3
+# 👔 StyleMate AI — Personal AI Fashion Stylist for Men
 
-### The starter kit for Track 3 of the Build with Gemini World Tour, and a showcase of what participants built with it.
+### Built during the Google Cloud **Build with Gemini** (Track 3: Software Developer) Hackathon & World Tour
 
-Clone this repo, open [Antigravity](https://antigravity.google), and build your own agent-first app on Google Cloud. Every project in the [gallery below](#-featured-projects) was built the same way: prototyped with Antigravity and `agents-cli`, equipped with Memory, tools, and storage, deployed to Agent Platform, and given a face on Cloud Run.
+[![Build with Gemini](https://img.shields.io/badge/Build%20with%20Gemini-Track%203%20Project-4285F4?logo=google&logoColor=white)](https://developers.google.com/events/community/build-with-gemini)
+[![Google Cloud Run](https://img.shields.io/badge/Deployed%20on-Cloud%20Run-4285F4?logo=googlecloud&logoColor=white)](https://stylemate-ai-253708072271.europe-west1.run.app/stylemate)
+[![Gemini Multimodal](https://img.shields.io/badge/AI-Gemini%202.5%20Flash-34A853?logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
+[![Google ADK](https://img.shields.io/badge/Agent-Google%20ADK%201.1.0-FBBC05)](https://google.github.io/adk-docs/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 <br/>
 
-![Build with Gemini](https://img.shields.io/badge/Build%20with%20Gemini-World%20Tour-4285F4?logo=google&logoColor=white)
-![Track 3](https://img.shields.io/badge/Track%203-Agent--First%20Apps-EA4335)
-![Google Cloud](https://img.shields.io/badge/Google%20Cloud-Agent%20Platform-4285F4?logo=googlecloud&logoColor=white)
-![Built with ADK](https://img.shields.io/badge/Built%20with-ADK%20%2B%20agents--cli-34A853)
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
-![Projects](https://img.shields.io/badge/Projects-8-blue)
-
-<sub>📖 <a href="https://cszhu.github.io/build-with-gemini/">Lab Guide</a> · 🛠️ <a href="https://google.github.io/agents-cli/guide/getting-started/">agents-cli</a> · 🤖 <a href="https://google.github.io/adk-docs/">ADK</a></sub>
+**Live Cloud Run Application:** [https://stylemate-ai-253708072271.europe-west1.run.app/stylemate](https://stylemate-ai-253708072271.europe-west1.run.app/stylemate)  
+**Interactive ADK Dev UI:** [https://stylemate-ai-253708072271.europe-west1.run.app/dev-ui/](https://stylemate-ai-253708072271.europe-west1.run.app/dev-ui/)
 
 </div>
 
 ---
 
-## 📚 Table of Contents
+## 🎬 Live Demo
 
-- [🧩 Anatomy of a Track 3 Project](#-anatomy-of-a-track-3-project)
-- [📂 Featured Projects](#-featured-projects)
-  - [🛍️ Commerce & Marketplace Agents](#️-commerce--marketplace-agents)
-  - [🍳 Food & Recipe Agents](#-food--recipe-agents)
-  - [✈️ Travel & Local Agents](#️-travel--local-agents)
-  - [💪 Health, Fitness & Wellness Agents](#-health-fitness--wellness-agents)
-  - [📚 Learning & Knowledge Agents](#-learning--knowledge-agents)
-  - [🎨 Creative & Media Agents](#-creative--media-agents)
-  - [🏢 Productivity & Enterprise Agents](#-productivity--enterprise-agents)
-  - [🧪 Experimental & Other](#-experimental--other)
-- [🧠 What's in this Repo](#-whats-in-this-repo)
-- [🧰 Build Your Own](#-build-your-own)
-- [📚 Resources](#-resources)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
+Here is **StyleMate AI** analyzing personal style, organizing a virtual wardrobe, reasoning over dinner date outfits, iteratively modifying clothing components, and searching budget-filtered shopping catalogs:
+
+<div align="center">
+
+<img src="assets/stylemate_demo.gif" alt="StyleMate AI Demo Walkthrough" width="90%" style="border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);" />
+
+*Watch the high-definition recording: [`assets/stylemate_demo.mp4`](assets/stylemate_demo.mp4)*
+
+</div>
 
 ---
 
-## 🧩 Anatomy of a Track 3 Project
+## 🌟 What is StyleMate AI?
 
-Every app in this collection is built from the same set of Google Cloud building blocks introduced in the lab. Once you understand this shape, you can read any project here at a glance:
+**StyleMate AI** is an **agent-first personal fashion assistant** designed specifically for men who want to look confident and well-dressed without spending hours figuring out what matches. 
 
-| Layer | What it does | Powered by |
+Unlike traditional rule-based recommendation engines that simply match static tags, StyleMate operates as an autonomous reasoning agent powered by **Gemini multimodal models** and the **Google Agent Development Kit (ADK)**:
+
+1. **Multimodal Style Profiling:** Analyzes user selfies to extract color season (e.g. *Warm Autumn*), undertones, contrast levels, and flattering silhouettes with rigorous privacy safeguards.
+2. **Virtual Wardrobe Grounding:** Categorizes uploaded clothing photos with subcategory, fabric, pattern, and formality tags, persisting them in Cloud Storage and Firestore.
+3. **Reasoning-Driven Outfit Generation:** Generates outfits grounded in owned wardrobe items, validating visual cohesion and occasion etiquette before suggesting purchases.
+4. **Iterative Conversation & Surgical Modifications:** Retains conversation context so users can swap individual garments (*"I don't like the pants. Change them."*) without resetting the rest of the outfit.
+5. **Shopping Assistant:** When wardrobe gaps exist, searches external catalogs matching exact style and budget constraints (*"Find me a shirt under ₹1500"*).
+6. **Virtual Concept Try-On:** Synthesizes concept visualizations of the user wearing the outfit with identity preservation and transparent AI disclosures.
+
+---
+
+## 🌐 About Build with Gemini
+
+This application was engineered for the **Build with Gemini** developer competition (Track 3: Software Developer). The challenge tasks builders to create production-ready, agentic applications on Google Cloud using the latest Gemini models and Agent Platform infrastructure.
+
+### Architecture & Google Cloud Services
+
+```mermaid
+graph TD
+    Client[Web Frontend / Mobile] -->|HTTPS| CloudRun[Google Cloud Run Container]
+    CloudRun -->|FastAPI + A2A Protocol| Agent[ADK Fashion Agent Engine]
+    Agent -->|Multimodal Reasoning| Gemini[Gemini 2.5 Flash]
+    Agent -->|Wardrobe & Profile Metadata| Firestore[(Google Cloud Firestore)]
+    Agent -->|Raw Images & Assets| GCS[(Google Cloud Storage)]
+    Agent -->|Concept Generation| Imagen[Imagen / Gemini Image Gen]
+```
+
+| Component | Technology | Purpose |
 |---|---|---|
-| 🤖 **The Agent** | The core reasoning loop | [ADK](https://google.github.io/adk-docs/) + [`agents-cli`](https://google.github.io/agents-cli/guide/getting-started/), scaffolded with [Antigravity](https://antigravity.google) |
-| 🧠 **Memory** | Remembers facts across sessions | [Agent Platform Memory Bank](https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/memory-bank) |
-| 🗄️ **Structured data** | Inventory, records, lists | [Firestore](https://console.cloud.google.com/firestore) |
-| 🖼️ **Files & blobs** | Images, media, assets | [Cloud Storage](https://console.cloud.google.com/storage) |
-| 🔧 **Tools** | Take real actions and fetch real data | ADK function tools |
-| 🎨 **Media generation** | Creates images (and video) on demand | `gemini-3.1-flash-lite-image` (Nano Banana 2 Lite) · Omni (video) |
-| 🧪 **Code sandbox** | Safely runs generated code | Agent Platform code execution |
-| 🪟 **Agent-first UI** | Cards and tables instead of plain text | [A2UI](https://adk.dev/integrations/a2ui/) |
-| 🌐 **Frontend** | A shareable web face | FastAPI proxy on [Cloud Run](https://cloud.google.com/run) |
+| **Agent Core** | Google ADK + `agents-cli` 1.1.0 (GA) | Multi-turn reasoning loop, tool execution, and state persistence |
+| **Multimodal AI** | Gemini 2.5 Flash | Real-time clothing attribute extraction and facial color season analysis |
+| **Runtime** | Google Cloud Run (Fully Managed) | Serverless container hosting the FastAPI server and ADK agent |
+| **Database** | Google Cloud Firestore | Real-time metadata for style profiles, wardrobe inventory, and outfits |
+| **Object Storage**| Google Cloud Storage | Secure private storage for clothing and profile images |
+| **UI Experience** | Vanilla JS + Glassmorphic Design | Clean responsive interface highlighting tool calls and reasoning cards |
 
 ---
 
-## 📂 Featured Projects
+## 🧪 Comprehensive Evaluation Suite
 
-A showcase of what workshop participants built with this lab. Entries are added here from the swag and gallery submission form after each event, so the categories below start empty and fill in over time. Browse them for inspiration, or [submit your own](#-contributing) once you've published your project with the `publish-to-github` skill.
+StyleMate AI includes an automated benchmark evaluation suite validating 13 distinct core agent capabilities:
 
-<!--
-Add one entry per project, in this format:
-- 🌿 **[Project Name](https://github.com/their-handle/their-repo)**: one-line description of what it does. <br/> <sub>by [@handle](https://github.com/handle)</sub>
+- **100% Pass Rate** across 13 benchmark scenarios & 27 unit tests.
+- **Key Benchmarks:** Wardrobe grounding, budget adherence, negative color constraints, single-item modification, hallucination resistance, and safety & privacy handling.
 
-Bump the "Projects" badge count at the top when you add one.
--->
-
-### 🛍️ Commerce & Marketplace Agents
-
-### 🍳 Food & Recipe Agents
-
-- 🥫 **[Smart Pantry Recipe Concierge](https://github.com/matthewrose/buildwithgemini-smart-pantry-recipe-concierge)**: Tracks your pantry and recommends recipes grounded in a real recipe corpus. <br/> <sub>by [@matthewrose](https://github.com/matthewrose)</sub>
-
-### ✈️ Travel & Local Agents
-
-- ⛈️ **[SafeStageWX](https://github.com/felix1028/buildwithgemini-safestagewx)**: An agentic mobile app that helps event planners identify weather threats and climate risks for an event given its date and location, providing tailored preparedness timelines from months out down to hourly day-of forecasts. <br/> <sub>by [@felix1028](https://github.com/felix1028)</sub>
-- 🌇 **[Sidewalk & Sun](https://github.com/OlafHaalstra/buildwithgemini-sidewalk-and-sun)**: Recommends sunny or shaded NYC spots from a curated 500-venue corpus, plotted on an interactive map. <br/> <sub>by [@OlafHaalstra](https://github.com/OlafHaalstra)</sub>
-
-### 💪 Health, Fitness & Wellness Agents
-
-- 🏊 **[TriCoach AI](https://github.com/common-aman/buildwithgemini-tricoach-ai)**: A triathlon coach that logs workouts, computes training zones, and generates motivational visuals. <br/> <sub>by [@common-aman](https://github.com/common-aman)</sub>
-
-### 📚 Learning & Knowledge Agents
-
-- 🎤 **[Interview Coach (PrepPal)](https://github.com/VineethBaradi/buildwithgemini-interview-coach)**: A mock-interview coach that runs LLM-driven practice sessions from a Firestore question bank and gives performance feedback. <br/> <sub>by [@VineethBaradi](https://github.com/VineethBaradi)</sub>
-
-### 🎨 Creative & Media Agents
-
-### 🏢 Productivity & Enterprise Agents
-
-- 🔧 **[GitCraft](https://github.com/fpobletemu/buildwithgemini-gitcraft)**: A developer git assistant that inspects your repo and drafts Conventional-Commits-style messages, grounded in a commit-style guide. <br/> <sub>by [@fpobletemu](https://github.com/fpobletemu)</sub>
-- 🖥️ **[IT Helpdesk Agent](https://github.com/NaweedAhmadi/buildwithgemini-it-helpdesk-agent)**: An IT support assistant that answers from a knowledge base and remembers context across sessions, with a ticket dashboard UI. <br/> <sub>by [@NaweedAhmadi](https://github.com/NaweedAhmadi)</sub>
-
-### 🧪 Experimental & Other
-
-- 🃏 **[Poker Agent](https://github.com/jakecho1108/buildwithgemini-poker-agent)**: A poker trainer with a real 800-iteration Monte Carlo equity engine and strategy tips grounded in a poker playbook. <br/> <sub>by [@jakecho1108](https://github.com/jakecho1108)</sub>
-
----
-
-## 🧠 What's in this Repo
-
-The `.agents/` folder teaches Antigravity how to build agents on Google Cloud.
-
-### Skills
-
-A **skill** is a bundle of instructions that loads automatically when it's relevant, so the agent gets the workflow right in fewer steps instead of rediscovering it each time.
-
-| Skill | What it does |
-| --- | --- |
-| [`pick-your-agent-project`](.agents/skills/pick-your-agent-project/SKILL.md) | Brainstorm your app idea and write a project brief |
-| [`troubleshoot-lab-setup`](.agents/skills/troubleshoot-lab-setup/SKILL.md) | Verify your environment and fix common setup errors |
-| [`memory-bank-setup`](.agents/skills/setup-memory-bank/SKILL.md) | Add cross-session memory to your agent with Vertex AI Memory Bank |
-| [`enable-a2ui`](.agents/skills/enable-a2ui/SKILL.md) | Make your agent reply with rich UI cards (A2UI) in the ADK dev UI |
-| [`build-agent-frontend`](.agents/skills/build-agent-frontend/SKILL.md) | Generate a FastAPI chat frontend and ship it to Cloud Run |
-| [`record-demo`](.agents/skills/record-demo/SKILL.md) | Record a branded demo video of your agent, with an optional AI soundtrack |
-| [`publish-to-github`](.agents/skills/publish-to-github/SKILL.md) | Publish your finished project to your own GitHub and submit it for swag |
-
-### Pre-configured tools (MCP)
-
-[`.agents/mcp_config.json`](.agents/mcp_config.json) wires up two [Model Context Protocol](https://modelcontextprotocol.io/) servers that authenticate with your gcloud credentials, so the agent can look things up instead of guessing:
-
-- **Firebase**: work directly with Firestore and other Firebase services
-- **Google Developer Knowledge**: grounded access to Google's official docs (Cloud, Firebase, ADK, Agent Platform)
-
-### Layout
-
-```text
-.agents/
-├── mcp_config.json    # Firebase + Developer Knowledge MCP servers
-├── rules/             # workspace rules (only deploy when asked)
-└── skills/            # the workshop skills listed above
-```
-
----
-
-## 🧰 Build Your Own
-
-The full, step-by-step walkthrough lives on the **[lab guide](https://cszhu.github.io/build-with-gemini/)**. This is the short version.
-
-**Prerequisites** (the lab workstation comes with all of this pre-installed; you'll need it if you're running on your own machine):
-
-- A **Google Cloud project** with billing enabled
-- **[Antigravity](https://antigravity.google)** (`agy`), the coding agent that loads the skills above
-- **[agents-cli](https://google.github.io/agents-cli/guide/getting-started/)**, built on the [Agent Development Kit (ADK)](https://google.github.io/adk-docs/)
-- Authenticated gcloud: `gcloud auth login` and `gcloud auth application-default login`
-- A personal **GitHub account** for the final publish-and-submit step
-
-**Quickstart:**
-
+Run tests locally:
 ```bash
-git clone https://github.com/cszhu/build-with-gemini
-cd build-with-gemini
-agy
+cd stylemate-ai
+uv run pytest tests/ -v
 ```
-
-On startup, Antigravity scans the `.agents/` folder and loads the skills and tools above automatically. In the AGY prompt:
-
-```text
-/skills            # see the installed skills
-/mcp               # confirm the firebase + google-developer-knowledge tools are connected
-```
-
-```text
-Verify my setup.   # runs the troubleshoot-lab-setup skill to check your environment
-```
-
-Then follow the [lab guide](https://cszhu.github.io/build-with-gemini/) to design, build, deploy, and share your agent, start to finish.
 
 ---
 
-## 📚 Resources
+## 📂 Project Structure
 
-- **[Lab guide](https://cszhu.github.io/build-with-gemini/)**: the step-by-step workshop
-- [Antigravity](https://antigravity.google)
-- [agents-cli](https://google.github.io/agents-cli/guide/getting-started/)
-- [Agent Development Kit (ADK)](https://google.github.io/adk-docs/)
-- [Gemini Enterprise Agent Platform](https://docs.cloud.google.com/gemini-enterprise-agent-platform)
+```text
+BuildWithGemini/
+├── assets/                       # Demo banner, GIF, and video recordings
+│   ├── build-with-gemini-banner.png
+│   ├── stylemate_demo.gif
+│   ├── stylemate_demo.mp4
+│   └── demo_preview.png
+├── stylemate-ai/                 # Main application source code
+│   ├── app/                      # Backend & Agent logic
+│   │   ├── agent.py              # Core ADK Fashion Agent definition
+│   │   ├── api_routes.py         # REST endpoints for stylemate actions
+│   │   ├── fast_api_app.py       # FastAPI application entrypoint
+│   │   ├── multimodal_service.py # Gemini multimodal vision analysis
+│   │   ├── outfit_engine.py      # Rule and style reasoning engine
+│   │   ├── shopping_provider.py  # Shopping tool abstraction
+│   │   ├── storage.py            # Cloud Storage integration
+│   │   ├── tools.py              # ADK tool definitions
+│   │   └── visualization_service.py # Outfit try-on preview generator
+│   ├── frontend/                 # Clean glassmorphic web interface
+│   │   └── index.html
+│   ├── tests/                    # Unit, integration, and eval test suites
+│   ├── Dockerfile                # Production Cloud Run container definition
+│   └── pyproject.toml
+├── DEMO_FLOW.md                  # Hackathon live presentation script
+├── DEPLOYMENT_REPORT.md          # Cloud Run deployment verification log
+├── DESIGN_SPEC.md                # System design & architecture document
+├── EVALUATION_REPORT.md          # Agent performance benchmark results
+└── README.md
+```
 
 ---
 
-## 🤝 Contributing
+## 🚀 Running Locally
 
-**Built something?** Publish it with the `publish-to-github` skill and submit it through the form it gives you. Submissions get you swag, and standout projects get added to the [Featured Projects](#-featured-projects) gallery above.
+### 1. Prerequisites
+- Python 3.11+
+- `uv` package manager (`curl -LsSf https://astral.sh/uv/install.sh | sh`)
+- Authenticated Google Cloud project with Vertex AI & Cloud Storage enabled:
+  ```bash
+  gcloud auth application-default login
+  gcloud config set project <YOUR_PROJECT_ID>
+  ```
 
-**Found a bug?** If you hit a rough edge in a skill or the lab, please [open an issue](https://github.com/cszhu/build-with-gemini/issues).
+### 2. Start the Application
+```bash
+cd stylemate-ai
+uv run uvicorn app.fast_api_app:app --host 0.0.0.0 --port 8000 --reload
+```
+
+Open your browser at:
+- **StyleMate Web App:** [http://127.0.0.1:8000/stylemate](http://127.0.0.1:8000/stylemate)
+- **ADK Dev Playground:** [http://127.0.0.1:8000/dev-ui/](http://127.0.0.1:8000/dev-ui/)
 
 ---
 
 ## 📄 License
 
-This is not an officially supported Google product and is provided for the Build with Gemini workshop for demonstration purposes only.
+This project is open-source and available under the [MIT License](LICENSE).
