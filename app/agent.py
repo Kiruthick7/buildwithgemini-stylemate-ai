@@ -13,6 +13,11 @@
 # limitations under the License.
 
 import os
+
+if os.getenv("GOOGLE_CLOUD_PROJECT") and not os.getenv("GOOGLE_GENAI_USE_ENTERPRISE"):
+    os.environ["GOOGLE_GENAI_USE_ENTERPRISE"] = "true"
+    os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "true"
+
 from google.adk.agents import Agent
 from google.adk.apps import App
 from google.adk.models import Gemini
@@ -34,7 +39,7 @@ from app.tools import (
     check_items_match,
 )
 
-MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+MODEL = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
 
 FASHION_BESTIE_INSTRUCTION = """You are "StyleMate AI", a personal AI fashion bestie for men.
 Your job is to help guys who feel uncreative or unsure about men's fashion make confident, stylish, and comfortable clothing decisions.

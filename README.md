@@ -8,7 +8,7 @@
 
 [![Build with Gemini](https://img.shields.io/badge/Build%20with%20Gemini-Track%203%20Project-4285F4?logo=google&logoColor=white)](https://developers.google.com/events/community/build-with-gemini)
 [![Google Cloud Run](https://img.shields.io/badge/Deployed%20on-Cloud%20Run-4285F4?logo=googlecloud&logoColor=white)](https://stylemate-ai-253708072271.europe-west1.run.app/stylemate)
-[![Gemini Multimodal](https://img.shields.io/badge/AI-Gemini%202.5%20Flash-34A853?logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
+[![Gemini Multimodal](https://img.shields.io/badge/AI-Gemini%203.6%20Flash-34A853?logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
 [![Google ADK](https://img.shields.io/badge/Agent-Google%20ADK%201.1.0-FBBC05)](https://google.github.io/adk-docs/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -69,7 +69,7 @@ graph TD
 | Component | Technology | Purpose |
 |---|---|---|
 | **Agent Core** | Google ADK + `agents-cli` 1.1.0 (GA) | Multi-turn reasoning loop, tool execution, and state persistence |
-| **Multimodal AI** | Gemini 2.5 Flash | Real-time clothing attribute extraction and facial color season analysis |
+| **Multimodal AI** | Gemini 3.6 Flash | Real-time clothing attribute extraction and facial color season analysis |
 | **Runtime** | Google Cloud Run (Fully Managed) | Serverless container hosting the FastAPI server and ADK agent |
 | **Database** | Google Cloud Firestore | Real-time metadata for style profiles, wardrobe inventory, and outfits |
 | **Object Storage**| Google Cloud Storage | Secure private storage for clothing and profile images |
