@@ -86,7 +86,6 @@ StyleMate AI includes an automated benchmark evaluation suite validating 13 dist
 
 Run tests locally:
 ```bash
-cd stylemate-ai
 uv run pytest tests/ -v
 ```
 
@@ -95,28 +94,31 @@ uv run pytest tests/ -v
 ## 📂 Project Structure
 
 ```text
-BuildWithGemini/
+buildwithgemini-stylemate-ai/
+├── app/                          # Backend & Agent logic
+│   ├── agent.py                  # Core ADK Fashion Agent definition
+│   ├── api_routes.py             # REST endpoints for stylemate actions
+│   ├── fast_api_app.py           # FastAPI application entrypoint
+│   ├── multimodal_service.py     # Gemini multimodal vision analysis
+│   ├── outfit_engine.py          # Rule and style reasoning engine
+│   ├── shopping_provider.py      # Shopping tool abstraction
+│   ├── storage.py                # Cloud Storage integration
+│   ├── tools.py                  # ADK tool definitions
+│   └── visualization_service.py  # Outfit try-on preview generator
+├── frontend/                     # Clean glassmorphic web interface
+│   └── index.html
+├── tests/                        # Unit, integration, and eval test suites
+│   ├── eval/                     # 13 agent evaluation benchmark scenarios
+│   ├── integration/              # FastAPI & ADK integration tests
+│   └── unit/                     # Unit test suites
 ├── assets/                       # Demo banner, GIF, and video recordings
 │   ├── build-with-gemini-banner.png
 │   ├── stylemate_demo.gif
 │   ├── stylemate_demo.mp4
 │   └── demo_preview.png
-├── stylemate-ai/                 # Main application source code
-│   ├── app/                      # Backend & Agent logic
-│   │   ├── agent.py              # Core ADK Fashion Agent definition
-│   │   ├── api_routes.py         # REST endpoints for stylemate actions
-│   │   ├── fast_api_app.py       # FastAPI application entrypoint
-│   │   ├── multimodal_service.py # Gemini multimodal vision analysis
-│   │   ├── outfit_engine.py      # Rule and style reasoning engine
-│   │   ├── shopping_provider.py  # Shopping tool abstraction
-│   │   ├── storage.py            # Cloud Storage integration
-│   │   ├── tools.py              # ADK tool definitions
-│   │   └── visualization_service.py # Outfit try-on preview generator
-│   ├── frontend/                 # Clean glassmorphic web interface
-│   │   └── index.html
-│   ├── tests/                    # Unit, integration, and eval test suites
-│   ├── Dockerfile                # Production Cloud Run container definition
-│   └── pyproject.toml
+├── Dockerfile                    # Production Cloud Run container definition
+├── pyproject.toml                # Dependencies & package configuration
+├── uv.lock                       # Pinned lockfile
 ├── DEMO_FLOW.md                  # Hackathon live presentation script
 ├── DEPLOYMENT_REPORT.md          # Cloud Run deployment verification log
 ├── DESIGN_SPEC.md                # System design & architecture document
@@ -139,7 +141,6 @@ BuildWithGemini/
 
 ### 2. Start the Application
 ```bash
-cd stylemate-ai
 uv run uvicorn app.fast_api_app:app --host 0.0.0.0 --port 8000 --reload
 ```
 
