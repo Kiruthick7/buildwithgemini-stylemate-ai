@@ -1,0 +1,170 @@
+[
+  {
+    "scenario_id": "eval_01_existing_wardrobe",
+    "name": "Outfit using existing wardrobe",
+    "user_query": "Give me an outfit from what I already own.",
+    "expected_tool": "generate_outfit",
+    "expected_args": {
+      "wardrobe_only": true
+    },
+    "criteria": {
+      "requires_wardrobe_grounding": true,
+      "requires_profile_grounding": true,
+      "no_invented_items": true
+    }
+  },
+  {
+    "scenario_id": "eval_02_date_outfit",
+    "name": "Date outfit",
+    "user_query": "I have a dinner date tonight, what should I wear?",
+    "expected_tool": "generate_outfit",
+    "expected_args": {
+      "occasion": "dinner date",
+      "formality": "smart_casual"
+    },
+    "criteria": {
+      "requires_wardrobe_grounding": true,
+      "minimum_items": 2
+    }
+  },
+  {
+    "scenario_id": "eval_03_office_outfit",
+    "name": "Office outfit",
+    "user_query": "Build a smart casual outfit for my tech office presentation.",
+    "expected_tool": "generate_outfit",
+    "expected_args": {
+      "occasion": "office presentation",
+      "formality": "smart_casual"
+    },
+    "criteria": {
+      "requires_wardrobe_grounding": true
+    }
+  },
+  {
+    "scenario_id": "eval_04_casual_weekend",
+    "name": "Casual weekend outfit",
+    "user_query": "I want something relaxed for coffee with friends on Saturday.",
+    "expected_tool": "generate_outfit",
+    "expected_args": {
+      "occasion": "casual weekend",
+      "formality": "casual"
+    },
+    "criteria": {
+      "requires_wardrobe_grounding": true
+    }
+  },
+  {
+    "scenario_id": "eval_05_limited_wardrobe",
+    "name": "User has limited wardrobe",
+    "user_query": "Build an outfit with what I have.",
+    "expected_tool": "generate_outfit",
+    "user_id": "empty_user",
+    "expected_args": {
+      "wardrobe_only": true
+    },
+    "criteria": {
+      "must_handle_empty_gracefully": true,
+      "no_hallucinations": true
+    }
+  },
+  {
+    "scenario_id": "eval_06_color_exclusion",
+    "name": "User explicitly excludes a color",
+    "user_query": "Give me a date outfit but absolutely no navy blue.",
+    "expected_tool": "generate_outfit",
+    "expected_args": {
+      "excluded_colors": ["navy blue", "navy"]
+    },
+    "criteria": {
+      "strict_banned_color_enforcement": true
+    }
+  },
+  {
+    "scenario_id": "eval_07_budget_request",
+    "name": "User requests a specific budget",
+    "user_query": "I need a black shirt under ₹1500.",
+    "expected_tool": "search_products",
+    "expected_args": {
+      "max_price": 1500.0,
+      "category": "topwear",
+      "color": "black"
+    },
+    "criteria": {
+      "strict_budget_ceiling": 1500.0
+    }
+  },
+  {
+    "scenario_id": "eval_08_replace_component",
+    "name": "User asks to replace only one outfit component",
+    "user_query": "I don't like the pants. Swap them for another pair from my closet.",
+    "expected_tool": "generate_outfit",
+    "expected_args": {
+      "modify_category": "bottomwear"
+    },
+    "criteria": {
+      "preserves_non_targeted_items": true
+    }
+  },
+  {
+    "scenario_id": "eval_09_items_match",
+    "name": "User asks whether two items match",
+    "user_query": "Does my olive overshirt go with beige chinos?",
+    "expected_tool": "check_items_match",
+    "expected_args": {
+      "item_a": "olive overshirt",
+      "item_b": "beige chinos"
+    },
+    "criteria": {
+      "provides_fashion_verdict": true,
+      "color_theory_grounding": true
+    }
+  },
+  {
+    "scenario_id": "eval_10_shopping_recommendations",
+    "name": "User asks for shopping recommendations",
+    "user_query": "Find me a good date shirt to buy under ₹2000.",
+    "expected_tool": "search_products",
+    "expected_args": {
+      "max_price": 2000.0,
+      "category": "topwear"
+    },
+    "criteria": {
+      "returns_verified_products": true,
+      "strict_budget_ceiling": 2000.0
+    }
+  },
+  {
+    "scenario_id": "eval_11_only_wardrobe_items",
+    "name": "User asks to use only wardrobe items",
+    "user_query": "Use only clothes I own. Do not suggest anything I have to buy.",
+    "expected_tool": "generate_outfit",
+    "expected_args": {
+      "wardrobe_only": true
+    },
+    "criteria": {
+      "strict_source_wardrobe": true
+    }
+  },
+  {
+    "scenario_id": "eval_12_ambiguous_image",
+    "name": "User uploads an ambiguous clothing image",
+    "user_query": "Analyze this blurry photo of clothing.",
+    "expected_tool": "analyze_clothing",
+    "expected_args": {
+      "image_uri": "blurry_dark_photo.jpg"
+    },
+    "criteria": {
+      "uncertainty_flag": true,
+      "low_confidence_rating": true
+    }
+  },
+  {
+    "scenario_id": "eval_13_insufficient_information",
+    "name": "User provides insufficient information",
+    "user_query": "What should I wear?",
+    "expected_behavior": "clarification_or_profile_retrieval",
+    "criteria": {
+      "clarification_or_retrieval": true
+    }
+  }
+]

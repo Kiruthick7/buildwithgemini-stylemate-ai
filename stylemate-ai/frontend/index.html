@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StyleMate AI — Agent-First Personal Fashion Bestie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --bg-dark: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --text-main: #f9fafb;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.25);
+      --gold: #f59e0b;
+      --shop: #10b981;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Header */
+    header {
+      padding: 12px 24px;
+      background: rgba(17, 24, 39, 0.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-subtitle {
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .demo-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 6px 14px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .demo-step-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-muted);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .demo-step-btn:hover, .demo-step-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    }
+
+    /* Layout Container */
+    .container {
+      display: grid;
+      grid-template-columns: 310px 1fr 440px;
+      gap: 16px;
+      padding: 16px 20px;
+      flex: 1;
+      height: calc(100vh - 67px);
+      overflow: hidden;
+    }
+
+    .panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .panel-header {
+      font-size: 0.98rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 10px;
+    }
+
+    .panel-content {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-right: 4px;
+    }
+
+    /* Profile Panel */
+    .profile-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .profile-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 0.84rem;
+    }
+
+    .profile-label {
+      color: var(--text-muted);
+    }
+
+    .profile-value {
+      font-weight: 600;
+      color: #e2e8f0;
+      text-transform: capitalize;
+    }
+
+    .badge-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .color-pill {
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 20px;
+      padding: 3px 9px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .avoid-pill {
+      background: rgba(239, 68, 68, 0.12);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: 20px;
+      padding: 3px 9px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    /* Center Chat & Action Indicator */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-right: 6px;
+    }
+
+    .message {
+      max-width: 88%;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+    }
+
+    .message.agent {
+      align-self: flex-start;
+      background: #1e293b;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Reasoning Indicator Box */
+    .reasoning-indicator {
+      display: none;
+      align-self: flex-start;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      width: 85%;
+      margin-bottom: 4px;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    .reasoning-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 4px 0;
+      color: #cbd5e1;
+    }
+
+    .reasoning-step.done {
+      color: #34d399;
+    }
+
+    .reasoning-step.active {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    @keyframes pulse {
+      0%, 100% { border-color: rgba(56, 189, 248, 0.2); }
+      50% { border-color: rgba(56, 189, 248, 0.6); box-shadow: 0 0 12px rgba(56, 189, 248, 0.15); }
+    }
+
+    .chat-input-area {
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: #fff;
+      font-size: 0.92rem;
+      outline: none;
+    }
+
+    .chat-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.25);
+    }
+
+    .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 0 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-viz {
+      background: linear-gradient(135deg, #8b5cf6, #d946ef);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+      transition: all 0.2s;
+    }
+
+    .btn-viz:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    .btn-save {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-left: 6px;
+    }
+
+    .btn-save:hover {
+      background: rgba(255,255,255,0.14);
+    }
+
+    /* Tabs & Right Panel */
+    .tab-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      background: rgba(255,255,255,0.03);
+      padding: 4px;
+      border-radius: 10px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 7px 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* Cards */
+    .item-card {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      position: relative;
+    }
+
+    .item-card.wardrobe {
+      border-left: 4px solid var(--primary);
+    }
+
+    .item-card.shopping {
+      border-left: 4px solid var(--shop);
+      background: rgba(16, 185, 129, 0.03);
+    }
+
+    .source-tag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .source-tag.wardrobe {
+      background: rgba(37, 99, 235, 0.2);
+      color: #60a5fa;
+    }
+
+    .source-tag.shopping {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .card-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 4px;
+    }
+
+    .tag-pill {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* Visualization Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-card {
+      background: #111827;
+      border: 1px solid var(--accent);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 20px rgba(56, 189, 248, 0.3);
+      border-radius: 18px;
+      width: 480px;
+      max-width: 90%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .viz-image-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+      height: 320px;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .viz-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .viz-ai-badge {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #38bdf8;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      backdrop-filter: blur(4px);
+    }
+
+    .viz-disclaimer {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    .upload-zone {
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .upload-zone:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.03);
+    }
+
+    .file-input { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo-badge">👔</div>
+      <div>
+        <h1 class="brand-title">StyleMate AI</h1>
+        <div class="brand-subtitle">Google Cloud Track 3 · Personal Fashion Bestie</div>
+      </div>
+    </div>
+
+    <!-- Live Hackathon Demo Controller Bar -->
+    <div class="demo-bar">
+      <span style="font-size:0.75rem; color:var(--text-muted); font-weight:700; margin-right:4px;">DEMO STEPS:</span>
+      <button class="demo-step-btn" onclick="runDemoStep(1)">1. Profile</button>
+      <button class="demo-step-btn" onclick="runDemoStep(3)">3. Wardrobe</button>
+      <button class="demo-step-btn" onclick="runDemoStep(5)">5. Date Query</button>
+      <button class="demo-step-btn" onclick="runDemoStep(8)">8. Swap Pants</button>
+      <button class="demo-step-btn" onclick="runDemoStep(10)">10. Shop &lt; ₹1500</button>
+      <button class="demo-step-btn" onclick="openVisualizeModal()">13. Visualize</button>
+    </div>
+
+    <div style="font-size: 0.82rem; color: #10b981; display: flex; align-items: center; gap: 6px; font-weight:600;">
+      <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981;"></span>
+      ADK Agent Live
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Left: Style Profile -->
+    <div class="panel">
+      <div class="panel-header">
+        <span>👤 Personal Style Profile</span>
+        <button class="demo-step-btn" onclick="refreshProfile()">↻ Sync</button>
+      </div>
+      <div class="panel-content" id="profile-content">
+        <div class="upload-zone" onclick="document.getElementById('profile-file').click()">
+          <span style="font-size: 1.4rem;">📸</span>
+          <p style="font-size: 0.78rem; margin-top: 4px; color: var(--text-muted)">Step 1: Upload selfie/portrait photo</p>
+          <input type="file" id="profile-file" class="file-input" accept="image/*" onchange="uploadProfilePhoto(event)" />
+        </div>
+
+        <div class="profile-card" id="profile-details">
+          <div class="profile-item">
+            <span class="profile-label">Face Shape:</span>
+            <span class="profile-value" id="prof-face">Oval</span>
+          </div>
+          <div class="profile-item">
+            <span class="profile-label">Skin Undertone:</span>
+            <span class="profile-value" id="prof-undertone">Neutral-Warm</span>
+          </div>
+          <div class="profile-item">
+            <span class="profile-label">Hair:</span>
+            <span class="profile-value" id="prof-hair">Dark Brown Wavy</span>
+          </div>
+          <div style="margin-top: 6px;">
+            <span class="profile-label" style="font-size: 0.78rem;">Flattering Palettes:</span>
+            <div class="badge-list" id="prof-palette"></div>
+          </div>
+          <div style="margin-top: 6px;">
+            <span class="profile-label" style="font-size: 0.78rem;">Colors to Avoid:</span>
+            <div class="badge-list" id="prof-avoid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center: Fashion Agent Chat -->
+    <div class="panel">
+      <div class="panel-header">
+        <span>💬 Fashion Bestie Chat</span>
+        <span style="font-size: 0.78rem; color: var(--accent); font-weight:700;">Multi-Turn Reasoner</span>
+      </div>
+      <div class="chat-container">
+        <!-- Live AI Action / Tool Execution Indicator -->
+        <div class="reasoning-indicator" id="reasoning-indicator">
+          <div style="font-weight:700; margin-bottom:4px; display:flex; align-items:center; gap:6px;">
+            <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#38bdf8;"></span>
+            AI Tool Reasoning in Progress:
+          </div>
+          <div id="reasoning-steps"></div>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+          <div class="message agent">
+            Hey bro! 👋 I'm your <strong>StyleMate AI</strong> fashion bestie.
+            I can reason over what you already own, adapt outfits when you want a swap, or hunt down verified deals under your budget.
+            <br/><br/>
+            <em>Try clicking any demo step in the top header bar to run the live story!</em>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <input type="text" id="chat-input" class="chat-input" placeholder="Ask for outfit advice or search shopping finds..." onkeydown="if(event.key==='Enter') sendMessage()" />
+          <button class="btn" onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Wardrobe & Shopping Tabs -->
+    <div class="panel">
+      <div class="tab-bar">
+        <button class="tab-btn active" id="tab-wardrobe" onclick="switchTab('wardrobe')">👔 My Wardrobe (<span id="wardrobe-count">0</span>)</button>
+        <button class="tab-btn" id="tab-shopping" onclick="switchTab('shopping')">🛍️ Shopping Finds (<span id="shop-count">0</span>)</button>
+        <button class="tab-btn" id="tab-saved" onclick="switchTab('saved')">⭐ Saved (<span id="saved-count">0</span>)</button>
+      </div>
+
+      <!-- Wardrobe View -->
+      <div id="view-wardrobe" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
+        <div class="panel-content">
+          <div class="upload-zone" onclick="document.getElementById('clothing-file').click()">
+            <span style="font-size: 1.4rem;">👕</span>
+            <p style="font-size: 0.78rem; margin-top: 4px; color: var(--text-muted)">Step 3: Upload garment photo for classification</p>
+            <input type="file" id="clothing-file" class="file-input" accept="image/*" onchange="uploadClothingPhoto(event)" />
+          </div>
+
+          <div class="wardrobe-list" id="wardrobe-items"></div>
+        </div>
+      </div>
+
+      <!-- Shopping Finds View -->
+      <div id="view-shopping" style="display: none; flex-direction: column; flex: 1; overflow: hidden;">
+        <div class="panel-content" id="shopping-items">
+          <div style="text-align: center; color: var(--text-muted); font-size: 0.82rem; padding: 20px;">
+            No shopping searches run yet. Step 10 searches verified retail items under ₹1500.
+          </div>
+        </div>
+      </div>
+
+      <!-- Saved Outfits View -->
+      <div id="view-saved" style="display: none; flex-direction: column; flex: 1; overflow: hidden;">
+        <div class="panel-content" id="saved-items">
+          <div style="text-align: center; color: var(--text-muted); font-size: 0.82rem; padding: 20px;">
+            No saved outfits yet. Click "Save Outfit" on any recommendation.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 13 & 14: Virtual Try-On Visualization Modal -->
+  <div class="modal-overlay" id="viz-modal">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="font-size:1.05rem; font-weight:700; color:#fff;">✨ Lookbook Concept Visualization</h3>
+        <button onclick="closeVisualizeModal()" style="background:transparent; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;">✕</button>
+      </div>
+
+      <div class="viz-image-wrap">
+        <img class="viz-image" id="viz-modal-img" src="https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=600&q=80" alt="Lookbook Visualization">
+        <div class="viz-ai-badge">AI-Generated Approximate Concept Visualization</div>
+      </div>
+
+      <div style="text-align:left; background:rgba(255,255,255,0.03); border-radius:10px; padding:10px;">
+        <div style="font-size:0.85rem; font-weight:700; color:#fff;" id="viz-modal-title">Curated Dinner Date Look</div>
+        <div style="font-size:0.75rem; color:var(--accent); margin-top:2px;" id="viz-modal-items">navy blue oxford shirt + charcoal jeans + white sneakers</div>
+      </div>
+
+      <p class="viz-disclaimer">
+        ⚠️ <strong>Responsible AI Notice:</strong> Simulated conceptual visualization only. Does not represent precise physical fit, exact fabric drape, or true personal appearance.
+      </p>
+
+      <button class="btn" onclick="closeVisualizeModal()" style="margin-top:4px;">Done</button>
+    </div>
+  </div>
+
+  <script>
+    const USER_ID = "default_user";
+    let activeOutfit = null;
+    let savedOutfitsList = [];
+
+    function switchTab(tab) {
+      document.getElementById('view-wardrobe').style.display = tab === 'wardrobe' ? 'flex' : 'none';
+      document.getElementById('view-shopping').style.display = tab === 'shopping' ? 'flex' : 'none';
+      document.getElementById('view-saved').style.display = tab === 'saved' ? 'flex' : 'none';
+
+      document.getElementById('tab-wardrobe').classList.toggle('active', tab === 'wardrobe');
+      document.getElementById('tab-shopping').classList.toggle('active', tab === 'shopping');
+      document.getElementById('tab-saved').classList.toggle('active', tab === 'saved');
+    }
+
+    /* AI Action Indicator Helper (Shows Tool Execution Without Leaking Chain of Thought) */
+    async function showReasoningSteps(steps) {
+      const box = document.getElementById('reasoning-indicator');
+      const container = document.getElementById('reasoning-steps');
+      box.style.display = 'block';
+      container.innerHTML = '';
+
+      for (let i = 0; i < steps.length; i++) {
+        const stepDiv = document.createElement('div');
+        stepDiv.className = 'reasoning-step active';
+        stepDiv.innerHTML = `<span>⏳</span> <span>${steps[i]}...</span>`;
+        container.appendChild(stepDiv);
+
+        await new Promise(r => setTimeout(r, 450));
+        stepDiv.className = 'reasoning-step done';
+        stepDiv.innerHTML = `<span>✓</span> <span>${steps[i]}</span>`;
+      }
+
+      await new Promise(r => setTimeout(r, 300));
+      box.style.display = 'none';
+    }
+
+    async function refreshProfile() {
+      try {
+        const res = await fetch(`/api/stylemate/profile?user_id=${USER_ID}`);
+        const data = await res.json();
+        if (data.status === "success" && data.profile) {
+          const p = data.profile;
+          document.getElementById('prof-face').innerText = p.approximate_face_shape || 'Oval';
+          document.getElementById('prof-undertone').innerText = p.skin_tone_undertone?.undertone || 'Neutral';
+          document.getElementById('prof-hair').innerText = p.visible_hair_characteristics || 'Dark Brown Wavy';
+
+          document.getElementById('prof-palette').innerHTML = (p.suitable_color_families || []).map(c => `<span class="color-pill">${c}</span>`).join('');
+          document.getElementById('prof-avoid').innerHTML = (p.avoid_colors || []).map(c => `<span class="avoid-pill">${c}</span>`).join('');
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function refreshWardrobe() {
+      try {
+        const res = await fetch(`/api/stylemate/wardrobe?user_id=${USER_ID}`);
+        const data = await res.json();
+        if (data.status === "success") {
+          document.getElementById('wardrobe-count').innerText = data.count || 0;
+          document.getElementById('wardrobe-items').innerHTML = (data.items || []).map(item => `
+            <div class="item-card wardrobe">
+              <div class="card-top">
+                <div>
+                  <span class="source-tag wardrobe">OWNED IN CLOSET</span>
+                  <div class="card-title" style="margin-top:4px;">${item.color} ${item.subcategory || item.sub_category}</div>
+                </div>
+                <span style="font-size:1rem;">👔</span>
+              </div>
+              <div class="card-meta">
+                <span class="tag-pill">${item.category}</span>
+                <span class="tag-pill">${item.style || item.formality}</span>
+                ${item.material ? `<span class="tag-pill">${item.material}</span>` : ''}
+              </div>
+            </div>
+          `).join('');
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function appendMessage(sender, text) {
+      const chat = document.getElementById('chat-messages');
+      const msg = document.createElement('div');
+      msg.className = `message ${sender}`;
+      msg.innerHTML = text.replace(/\n/g, '<br/>');
+      chat.appendChild(msg);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function renderOutfitRecommendation(o) {
+      activeOutfit = o;
+      const itemsList = o.items_summary.map(i => `<li>• <strong>${i}</strong> (From closet)</li>`).join('');
+      const html = `
+        <strong>✨ ${o.title}</strong><br/><br/>
+        Here is the ensemble coordinated from your wardrobe:<br/>
+        <ul style="margin: 6px 0 10px 16px;">${itemsList}</ul>
+        <strong>Fashion Rationale:</strong> ${o.rationale}
+        <br/>
+        <div>
+          <button class="btn-viz" onclick="openVisualizeModal()">🎨 Visualize on Me</button>
+          <button class="btn-save" onclick="saveActiveOutfit()">💾 Save Outfit</button>
+        </div>
+      `;
+      appendMessage("agent", html);
+    }
+
+    function openVisualizeModal() {
+      if (activeOutfit) {
+        document.getElementById('viz-modal-title').innerText = activeOutfit.title || 'Curated Outfit';
+        document.getElementById('viz-modal-items').innerText = (activeOutfit.items_summary || []).join(' + ');
+      }
+      document.getElementById('viz-modal').style.display = 'flex';
+    }
+
+    function closeVisualizeModal() {
+      document.getElementById('viz-modal').style.display = 'none';
+    }
+
+    async function saveActiveOutfit() {
+      if (!activeOutfit) return;
+      try {
+        const res = await fetch("/api/stylemate/outfits/save", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            name: activeOutfit.title,
+            items_summary: activeOutfit.items_summary,
+            occasion: activeOutfit.occasion,
+            rationale: activeOutfit.rationale,
+            user_id: USER_ID
+          })
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+          savedOutfitsList.push(data.outfit);
+          document.getElementById('saved-count').innerText = savedOutfitsList.length;
+          renderSavedOutfits();
+          appendMessage("agent", `Saved <strong>${activeOutfit.title}</strong> to your collection! ⭐ Check the Saved tab.`);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function renderSavedOutfits() {
+      const container = document.getElementById('saved-items');
+      container.innerHTML = savedOutfitsList.map(s => `
+        <div class="item-card wardrobe">
+          <div class="card-top">
+            <div>
+              <span class="source-tag wardrobe">SAVED LOOK</span>
+              <div class="card-title" style="margin-top:4px;">${s.name}</div>
+            </div>
+            <span style="color:var(--gold);">⭐</span>
+          </div>
+          <div style="font-size:0.75rem; color:#cbd5e1; margin-top:4px;">${(s.items_summary || []).join(' • ')}</div>
+          <p style="font-size:0.74rem; color:var(--text-muted); margin-top:4px;">${s.rationale}</p>
+        </div>
+      `).join('');
+    }
+
+    /* Demo Story Runner */
+    async function runDemoStep(step) {
+      if (step === 1 || step === 2) {
+        // Step 1 & 2: User uploads photo -> Agent analyzes & builds style profile
+        appendMessage("user", "📸 [Uploaded portrait photo: user_portrait.jpg]");
+        await showReasoningSteps([
+          "Analyzing portrait photo with Gemini Vision",
+          "Extracting non-sensitive facial balance and undertone",
+          "Style profile created and saved to Firestore"
+        ]);
+        appendMessage("agent", "I've analyzed your portrait photo! You have an <strong>oval face structure</strong> and <strong>neutral-warm undertone</strong>. Earth tones (olive, terracotta) and balanced neutrals (navy, beige) will make you stand out without washing you out. Check your Profile on the left panel!");
+        refreshProfile();
+      }
+      else if (step === 3 || step === 4) {
+        // Step 3 & 4: Upload clothing items -> Virtual wardrobe built
+        appendMessage("user", "👕 [Uploaded clothing items: oxford shirt, chinos, tee, overshirt]");
+        await showReasoningSteps([
+          "Classifying garments with Gemini Multimodal Vision",
+          "Cataloging colors, fabrics, and formality tiers",
+          "Virtual wardrobe populated"
+        ]);
+        appendMessage("agent", "Your virtual wardrobe is live! I've cataloged your navy oxford button-down, warm beige chinos, cream crewneck tee, olive overshirt, charcoal jeans, and white leather sneakers. All tagged and ready to be styled!");
+        refreshWardrobe();
+        switchTab('wardrobe');
+      }
+      else if (step === 5 || step === 6 || step === 7) {
+        // Step 5, 6, 7: "I have a dinner date tonight. What should I wear?"
+        appendMessage("user", "I have a dinner date tonight. What should I wear?");
+        await showReasoningSteps([
+          "Analyzing your style",
+          "Style profile loaded",
+          "Wardrobe loaded",
+          "Finding compatible colors",
+          "Creating outfit"
+        ]);
+        const res = await fetch("/api/stylemate/outfits/generate", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            occasion: "dinner date",
+            formality: "smart_casual",
+            weather_context: "chilly evening",
+            user_id: USER_ID
+          })
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+          renderOutfitRecommendation(data.outfit);
+        }
+      }
+      else if (step === 8 || step === 9) {
+        // Step 8 & 9: "I don't like the pants. Change them."
+        appendMessage("user", "I don't like the pants. Change them.");
+        await showReasoningSteps([
+          "Retaining active shirt and shoes context",
+          "Querying wardrobe for alternative bottomwear",
+          "Replacing only pants while preserving the rest of outfit"
+        ]);
+        const res = await fetch("/api/stylemate/outfits/generate", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            user_id: USER_ID,
+            modify_category: "bottomwear",
+            feedback_instruction: "I don't like the pants"
+          })
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+          renderOutfitRecommendation(data.outfit);
+        }
+      }
+      else if (step === 10 || step === 11) {
+        // Step 10 & 11: "I don't own a good shirt for this. Find me one under ₹1500."
+        appendMessage("user", "I don't own a good shirt for this. Find me one under ₹1500.");
+        await showReasoningSteps([
+          "Checking user skin undertone compatibility",
+          "Calling search_products tool abstraction",
+          "Filtering verified retail catalog under ₹1500",
+          "Ranking by style relevance and color harmony"
+        ]);
+        const res = await fetch(`/api/stylemate/shopping/search?query=black%20shirt&max_price=1500&category=topwear&color=black&user_id=${USER_ID}`);
+        const data = await res.json();
+        if (data.status === "success" && data.products.length) {
+          const prods = data.products;
+          document.getElementById('shop-count').innerText = prods.length;
+          document.getElementById('shopping-items').innerHTML = prods.map(p => `
+            <div class="item-card shopping">
+              <div class="card-top">
+                <div>
+                  <span class="source-tag shopping">VERIFIED RETAIL FIND</span>
+                  <div class="card-title" style="margin-top:4px;">${p.title}</div>
+                </div>
+                <div style="font-weight:700; color:var(--shop); font-size:0.95rem;">₹${p.price.toLocaleString()}</div>
+              </div>
+              <div style="font-size:0.75rem; color:#cbd5e1; margin-top:3px;">${p.brand} • ★ ${p.rating}</div>
+              <p style="font-size:0.74rem; color:var(--text-muted); margin-top:4px; line-height:1.4;">${p.match_rationale || ''}</p>
+              <a href="${p.product_url}" target="_blank" style="display:inline-block; margin-top:6px; font-size:0.74rem; color:var(--accent); text-decoration:none;">View in Retail Store ↗</a>
+            </div>
+          `).join('');
+
+          appendMessage("agent", `Found <strong>${prods.length} verified shirts</strong> strictly under your ₹1500 ceiling!<br/><br/>Top pick: <strong>${prods[0].title}</strong> by ${prods[0].brand} at <strong>₹${prods[0].price.toLocaleString()}</strong>.<br/><em>${prods[0].match_rationale}</em><br/><br/>👉 Check out the <strong>Shopping Finds</strong> tab on the right!`);
+          switchTab('shopping');
+        }
+      }
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      appendMessage("user", text);
+      input.value = "";
+
+      const lower = text.toLowerCase();
+      if (lower.includes("date") || lower.includes("dinner")) {
+        runDemoStep(5);
+      } else if (lower.includes("pant") && (lower.includes("don't like") || lower.includes("change") || lower.includes("swap"))) {
+        runDemoStep(8);
+      } else if (lower.includes("under") || lower.includes("1500") || lower.includes("buy") || lower.includes("find me a shirt")) {
+        runDemoStep(10);
+      } else if (lower.includes("visualize") || lower.includes("show me")) {
+        openVisualizeModal();
+      } else {
+        appendMessage("agent", "I'm on it! Use the demo steps above or ask about date looks, shopping deals under a budget, or closet combinations.");
+      }
+    }
+
+    window.onload = () => {
+      refreshProfile();
+      refreshWardrobe();
+    };
+  </script>
+</body>
+</html>
